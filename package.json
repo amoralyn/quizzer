@@ -7,7 +7,7 @@
     "test": "tests"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "./node_modules/.bin/istanbul cover ./node_modules/mocha/bin/_mocha tests/server ",
     "start": "nodemon server.js"
   },
   "repository": {
@@ -29,6 +29,10 @@
     "morgan": "^1.7.0"
   },
   "devDependencies": {
-    "dotenv": "^2.0.0"
+    "dotenv": "^2.0.0",
+    "expect.js": "^0.3.1",
+    "istanbul": "^0.4.5",
+    "mocha": "^3.1.2",
+    "supertest": "^2.0.1"
   }
 }
