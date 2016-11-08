@@ -39,20 +39,17 @@
             return res.status(404).json({
               message: 'Authentication failed, User not found'
             });
-          }else{
-            //check if password matches
-              if (bcrypt.compareSync(req.body.password, user.password)) {
-                // if user was found and password matches
-                // create token
-                const token = jwt.sign({ id: user._id }, config.secretKey, {
-                  expiresIn: 60 * 60 * 24
-                });
-                user.password = undefined;
-                return res.status(200).json({ user, token });
-              }
-
           }
-
+        //check if password matches
+          if (bcrypt.compareSync(req.body.password, user.password)) {
+            // if user was found and password matches
+            // create token
+            const token = jwt.sign({ id: user._id }, config.secretKey, {
+              expiresIn: 60 * 60 * 24
+            });
+            user.password = undefined;
+            return res.status(200).json({ user, token });
+          }
         })
         .catch((err) => {
           res.status(500).json(err);
