@@ -1,0 +1,23 @@
+{
+  "name": "quizzer",
+  "version": "1.0.0",
+  "description": "A Quiz Application with sharable links",
+  "main": "server.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andela-ltijesunimi-israel/quizzer.git"
+  },
+  "author": "Lovelyn Tijesunimi-Israel",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/andela-ltijesunimi-israel/quizzer/issues"
+  },
+  "homepage": "https://github.com/andela-ltijesunimi-israel/quizzer#readme"
+}
