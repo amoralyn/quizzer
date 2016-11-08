@@ -7,7 +7,7 @@
   const methodOverride = require('method-override');
   const cors = require('cors');
   const config = require('./server/config/environment.js');
-  const connect = require('./server/config/connections.js')
+  const connect = require('./server/config/connections.js');
   const mongoose = require('mongoose');
   const router = express.Router();
   const bluebird = require('bluebird');
@@ -18,7 +18,7 @@
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Accept, Content-Type');
     next();
-  })
+  });
 
   app.use(morgan('dev'));
   app.use(bodyParser.json());
@@ -45,7 +45,7 @@
   app.listen(config.port, (err) => {
     if (err) {
       throw err;
-    };
+    }
 
     console.log('Successfully connected to ' + config.port);
   });
