@@ -6,28 +6,6 @@
   const saltFactor = require('./../config/environment.js').saltFactor;
 
   let userSchema = new Schema({
-    name: {
-      firstName: {
-        type: String,
-        required: false,
-        validate: {
-          validator: (firstName) => {
-            return /[A-Za-z]/.test(firstName);
-          },
-          message: '{VALUE} is not a valid firstName'
-        }
-      },
-      lastName: {
-        type: String,
-        required: false,
-        validate: {
-          validator: (lastName) => {
-            return /[A-Za-z]/.test(lastName);
-          },
-          message: '{VALUE} is not a valid lastName'
-        }
-      }
-    },
     username: {
       type: String,
       required: true,
