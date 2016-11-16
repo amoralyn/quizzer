@@ -116,6 +116,8 @@
           .send(userCredentials)
           .end((err, res) => {
             console.log(res.body);
+            expect(res.body).to.be.an('object');
+            // expect(res.body);
             done();
           });
       });

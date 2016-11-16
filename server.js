@@ -10,10 +10,11 @@
   const connect = require('./server/config/connections.js');
   const mongoose = require('mongoose');
   const router = express.Router();
+  const routes = require('./server/routes/index.js');
   const bluebird = require('bluebird');
   mongoose.Promise = bluebird;
 
-  // routes(router);
+  routes(router);
   app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Accept, Content-Type');
@@ -29,12 +30,12 @@
   app.use(methodOverride());
 
 
-  app.use(express.static(__dirname + '/public/'));
+  // app.use(express.static(__dirname + '/public/'));
 
   // connect to database
   connect(mongoose, config.database);
 
-  // app.use('/api', router);
+  app.use('/api', router);
 
   app.get('/*', (req, res) => {
     res.send({message:'You have reached the Quizzer API' });
