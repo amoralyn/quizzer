@@ -40,7 +40,6 @@
               message: 'Authentication failed, User not found'
             });
           }
-        //check if password matches
           if (bcrypt.compareSync(req.body.password, user.password)) {
             // if user was found and password matches
             // create token
