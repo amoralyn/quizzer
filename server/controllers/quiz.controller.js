@@ -20,7 +20,7 @@
         return User
           .findByIdAndUpdate(req.decoded.id, update)
           .exec()
-          .
+          .populate('quizzes')
       }
       quiz.save()
         .then((task) => {
