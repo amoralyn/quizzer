@@ -2,6 +2,7 @@
   'use strict';
   const mongoose = require('mongoose');
   const Schema = mongoose.Schema;
+  const ObjectId = Schema.Types.ObjectId;
   const bcrypt = require('bcrypt');
   const saltFactor = require('./../config/environment.js').saltFactor;
 
@@ -10,34 +11,20 @@
       type: String,
       required: true,
       unique: [true, 'username already taken'],
-      validate: {
-        validator: (username) => {
-          return /\w+/.test(username);
-        },
-        message: '{VALUE} is not a valid username'
-      }
     },
     email: {
       type: String,
       required: [true, 'Email is required for account registration'],
       unique: [true, 'Email already in use'],
-      validate: {
-        validator: (email) => {
-          return /\S+@\S+\.\S+/.test(email);
-        },
-        message: '{VALUE} is not a valid email'
-      }
     },
     password: {
       type: String,
       required: [true, 'Password is required for account registration'],
-      validate: {
-        validator: (password) => {
-          return /\w+/.test(password);
-        },
-        message: '{VALUE} is not a valid password'
-      }
     },
+    quizzes: [{
+      type: ObjectId,
+      ref: 'Quiz'
+    }],
     createdAt: {
       type: Date,
       default: Date.now,
