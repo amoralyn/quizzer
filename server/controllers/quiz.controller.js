@@ -5,7 +5,7 @@
   const Quiz = require('./../models/quiz.model');
 
   module.exports ={
-    createNewTask(req, res) {
+    createQuiz(req, res) {
       let userId = req.decoded.id;
       let quiz = new Quiz({
         name: req.body.name,
