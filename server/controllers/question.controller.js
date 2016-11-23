@@ -6,7 +6,8 @@
 
   module.exports = {
     createQuestion(req, res) {
-      let quizId = req.query.id;
+      let quizId = req.body.quizId;
+      console.log(req.body);
       let question = new Question({
         quizId: quizId,
         question: req.body.question,
@@ -19,7 +20,7 @@
         };
 
         return Quiz
-          .findByIdAndUpdate(req.query.id, update)
+          .findByIdAndUpdate(quizId, update)
           .exec()
           .then(() => {
             res.status(200).json(question);
