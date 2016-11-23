@@ -30,7 +30,7 @@
       }
       question.save()
         .then(() => {
-          return addQuestionIdToQuiz(question.id, question);
+           addQuestionIdToQuiz(question.id, question);
         })
         .catch((err) => {
           res.status(500).json(err);

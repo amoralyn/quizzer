@@ -11,15 +11,33 @@
       type: String,
       required: true,
       unique: [true, 'username already taken'],
+      validate: {
+          validator: function(username) {
+            return /\w+/.test(username);
+          },
+          message: "{VALUE} is not a valid username"
+        }
     },
     email: {
       type: String,
       required: [true, 'Email is required for account registration'],
       unique: [true, 'Email already in use'],
+      validate: {
+        validator: function(email) {
+            return /\S+@\S+\.\S+/.test(email);
+          },
+          message: "{VALUE} is not a valid email"
+      }
     },
     password: {
       type: String,
       required: [true, 'Password is required for account registration'],
+      validate: {
+        validator: function(password) {
+          return /\w+/.test(password);
+        },
+        message: "{VALUE} is not a valid password"
+      }
     },
     quizzes: [{
       type: ObjectId,

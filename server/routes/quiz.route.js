@@ -13,7 +13,7 @@
         .get(quizController.getAllQuizzes);
 
       //route to get all quizzes of a specific user
-      router.route('/user/:userId/quizzes')
+      router.route('/user/:owner/quizzes')
         .get(quizController.getQuizByUser);
 
       //route to get a quiz by its Id

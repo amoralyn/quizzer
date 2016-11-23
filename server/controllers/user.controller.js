@@ -9,7 +9,6 @@
   module.exports = {
 
     createNewUser(req, res) {
-    //  console.log("Creating user");
       let newUser = new User({
         username: req.body.username,
         email: req.body.email,
@@ -89,6 +88,11 @@
       User.findById({ _id: req.params.id }, '-password -__v')
         .exec()
         .then((user) => {
+          if (!user) {
+            return res.status(404).json({
+              message: 'No user found'
+            });
+          }
           res.send(user);
         })
         .catch((err) => {
