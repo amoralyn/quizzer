@@ -21,7 +21,17 @@
     questions: [{
       type: ObjectId,
       ref: 'Questions'
-    }]
+    }],
+    createdAt: {
+     type: Date,
+     default: Date.now,
+     required: true
+   },
+   updatedAt: {
+     type: Date,
+     default: Date.now,
+     required: true
+   }
   });
 
   module.exports = mongoose.model('Quiz', quizSchema);
