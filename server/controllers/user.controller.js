@@ -17,6 +17,11 @@
 
       user.save()
         .then((user) => {
+          if (user) {
+            res.status(409).json({
+              message: 'User already exists'
+            });
+          }
           user.password = undefined;
           res.status(200).json({
             user,
