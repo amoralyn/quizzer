@@ -10,25 +10,31 @@
 
     createNewUser(req, res) {
     //  console.log("Creating user");
-      let user = new User({
+      let newUser = new User({
         username: req.body.username,
         email: req.body.email,
         password: req.body.password
       });
-
-      user.save()
-        .then((user) => {
-          user.password = undefined;
-          res.status(200).json({
-            user,
-            message: 'User successfully created'
-          });
-        })
-        .catch(() => {
-          res.status(500).json({
+      User.findOne({
+        username: req.body.username
+      }, (err, user) => {
+        if (user) {
+          res.status(409).json({
             message: 'User already exists'
           });
-        });
+        }
+        newUser.save()
+          .then((user) => {
+            user.password = undefined;
+            res.status(200).json({
+              user,
+              message: 'User successfully created'
+            });
+          })
+          .catch((err) => {
+            res.status(500).json(err);
+          });
+      });
     },
     login(req, res) {
       //check if user exists
