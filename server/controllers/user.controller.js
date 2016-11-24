@@ -9,6 +9,7 @@
   module.exports = {
 
     createNewUser(req, res) {
+    //  console.log("Creating user");
       let user = new User({
         username: req.body.username,
         email: req.body.email,
@@ -17,19 +18,16 @@
 
       user.save()
         .then((user) => {
-          if (user) {
-            res.status(409).json({
-              message: 'User already exists'
-            });
-          }
           user.password = undefined;
           res.status(200).json({
             user,
             message: 'User successfully created'
           });
         })
-        .catch((err) => {
-          res.status(500).json(err);
+        .catch(() => {
+          res.status(500).json({
+            message: 'User already exists'
+          });
         });
     },
     login(req, res) {
@@ -52,7 +50,12 @@
               expiresIn: 60 * 60 * 24
             });
             user.password = undefined;
+            console.log('How about here');
             return res.status(200).json({ user, token });
+          } else {
+            return res.status(401).json({
+              message: 'Invalid credentials.'
+            });
           }
         })
         .catch((err) => {
