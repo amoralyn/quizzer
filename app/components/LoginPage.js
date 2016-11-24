@@ -22,7 +22,8 @@ export default class LoginPage extends React.Component {
         password: password
       }
     }).done((res) => {
-      this.context.router.push('/');
+      localStorage.setItem('x-access-token', res.token);
+      this.context.router.push('/dashboard');
       console.log(res);
     }).fail((err) => {
       console.log(err);
