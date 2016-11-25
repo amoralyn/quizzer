@@ -7,9 +7,22 @@
   height: 120px;
 }
 
+.quizzer-logo {
+  animation: App-logo-spin infinite 20s linear;
+  heigth: 50px;
+  float: left;
+}
+
 .App-header {
   background-color: #c72020;
   height: 280px;
+  padding: 20px;
+  color: white;
+}
+
+.Dashboard-header {
+  background-color: #c72020;
+  height: 85px;
   padding: 20px;
   color: white;
 }

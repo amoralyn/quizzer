@@ -56,7 +56,6 @@
               expiresIn: 60 * 60 * 24
             });
             user.password = undefined;
-            console.log('How about here');
             return res.status(200).json({ user, token });
           } else {
             return res.status(401).json({
