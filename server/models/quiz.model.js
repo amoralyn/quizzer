@@ -5,7 +5,7 @@
   const ObjectId = Schema.Types.ObjectId;
 
   let quizSchema = new Schema({
-    userId: {
+    owner: {
       type: ObjectId,
       ref: 'User'
     },

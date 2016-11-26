@@ -4,8 +4,6 @@ import  './../css/app.css';
 import $ from 'jquery';
 
 
-
-
 export default class QuizPage extends React.Component {
   constructor(props) {
     super(props);
@@ -26,6 +24,7 @@ export default class QuizPage extends React.Component {
       },
       headers: {'x-access-token': token}
     }).done((res) => {
+      localStorage.setItem('quizId', res._id);
       this.context.router.push('/create-questions');
     }).fail((err) => {
       this.refs.errMsg.textContent = JSON.parse(err.responseText).message;
@@ -45,7 +44,7 @@ export default class QuizPage extends React.Component {
                 </p>
                 <div className="form-group">
                   <label htmlFor="quiz-name">Name:</label>
-                  <input type="text" placeholder="React" id="quiz-name" ref="name" className="form-control" required/>
+                <input type="text" placeholder="Add a quiz name" id="quiz-name" ref="name" className="form-control" required/>
                 </div>
 
                 <div className="form-group">

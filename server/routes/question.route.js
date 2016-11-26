@@ -8,20 +8,16 @@
     router.use(auth.middleware);
 
     //route to create a new question
-    router.route('/question')
+    router.route('/quiz/:quizId/questions')
       .post(questionController.createQuestion)
       .get(questionController.getAllQuestions);
 
-    //route to get all questions of a specific user
-    router.route('/user/:userId/questions')
-      .get(questionController.getQuestionsByQuiz);
-
     //route to get a question by its Id
-    router.route('/question/:id')
+    router.route('/quiz/:quizId/questions/:id')
       .get(questionController.getAQuestion)
-      .put(auth.userAccess,
+      .put(auth.questionAccess,
         questionController.editQuestion)
-      .delete(auth.userAccess,
+      .delete(auth.questionAccess,
         questionController.deleteQuestion);
   };
 })();

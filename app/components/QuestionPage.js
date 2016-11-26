@@ -1,15 +1,26 @@
 import React from "react";
+import { Link } from "react-router";
 import logo from "./../img/quizzer.png";
 import "./../css/app.css";
 import $ from "jquery";
-
-
 
 
 export default class QuestionPage extends React.Component {
   constructor(props) {
     super(props);
     this.handleCreateQuestion = this.handleCreateQuestion.bind(this);
+
+    this.state = {
+      questionCount: 0
+    };
+  }
+
+  shouldDisable() {
+    return this.state.questionCount < 1 ? true : false;
+  }
+
+  questionCount() {
+    return (this.state.questionCount += 1) - 1;
   }
 
   handleCreateQuestion(e) {
@@ -20,8 +31,10 @@ export default class QuestionPage extends React.Component {
     let option3 = this.refs.option3.value;
     let answer = this.refs.answer.value;
     let token = localStorage.getItem("x-access-token");
+    let quizId = localStorage.getItem("quizId");
+    let questionUrl = "http://localhost:3000/api/quiz/" + quizId + "/questions";
 
-    $.ajax("http://localhost:3000/api/question?quizId", {
+    $.ajax(questionUrl, {
       method: "POST",
       data: {
         question: question,
@@ -30,7 +43,7 @@ export default class QuestionPage extends React.Component {
       },
       headers: { "x-access-token": token }
     }).done((res) => {
-      this.context.router.push("/quiz");
+      this.forceUpdate();
     }).fail((err) => {
       this.refs.errMsg.textContent = JSON.parse(err.responseText).message;
       this.refs.errMsg.classList.add("alert", "alert-danger");
@@ -44,12 +57,12 @@ export default class QuestionPage extends React.Component {
         </div>
           <section className="quiz-form container">
             <div className="row">
-              <form method="post" className="form col-sm-6 col-sm-offset-3" onSubmit={this.handleCreateQuiz}>
+              <form className="form col-sm-6 col-sm-offset-3" onSubmit={this.handleCreateQuestion}>
                 <p ref="errMsg">
                 </p>
                 <div className="form-group">
                   <label htmlFor="quiz-name">Question:</label>
-                  <input type="text" placeholder="What is a question?" id="quiz-name" ref="name" className="form-control" required/>
+                <input type="text" placeholder="What is a question?" id="quiz-name" ref="question" className="form-control" required/>
                 </div>
 
                 <div className="form-group">
@@ -76,9 +89,15 @@ export default class QuestionPage extends React.Component {
                   </select>
                 </div>
 
-                <div className="form-group">
-                  <button type="submit" className="btn btn-success">Create Question</button>
+                <div className="form-group text-left">
+                  <button type="submit" className="btn btn-info">Add</button>
+
+                  <Link to="/dashboard" className="btn btn-success" disabled={ this.shouldDisable() }>Save Quiz</Link>
                 </div>
+
+                <p className="question-count">
+                  <strong>questions added:</strong> { this.questionCount() }
+                </p>
               </form>
             </div>
           </section>

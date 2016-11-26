@@ -4,9 +4,6 @@ import logo from './../img/quizzer.png';
 import  './../css/app.css';
 import $ from 'jquery';
 
-window.q = $;
-
-
 export default class SignUpPage extends React.Component {
   constructor(props) {
     super(props);
@@ -27,7 +24,8 @@ export default class SignUpPage extends React.Component {
         password: password
       }
     }).done((res) => {
-      this.context.router.push('/create-quiz');
+      localStorage.setItem('signup-successful-msg', res.message + '! You can now login.');
+      this.context.router.push('/login');
     }).fail((err) => {
       this.refs.errMsg.textContent = JSON.parse(err.responseText).message;
       this.refs.errMsg.classList.add('alert', 'alert-danger');
@@ -65,6 +63,10 @@ export default class SignUpPage extends React.Component {
               <div className="form-group">
                 <button type="submit" className="btn btn-success">Sign up</button>
               </div>
+
+              <p>
+                Already have an account? <Link to="/login">Login</Link>
+              </p>
             </form>
           </div>
         </section>
