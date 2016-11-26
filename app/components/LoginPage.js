@@ -23,7 +23,7 @@ export default class LoginPage extends React.Component {
       }
     }).done((res) => {
       localStorage.setItem('x-access-token', res.token);
-      this.context.router.push('/dashboard');
+      this.context.router.push('/create-quiz');
       console.log(res);
     }).fail((err) => {
       console.log(err);

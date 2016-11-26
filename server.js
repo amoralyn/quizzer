@@ -22,7 +22,7 @@
     next();
   });
 
-//cors and preflight filtering
+  //cors and preflight filtering
 app.all('*', function(req, res, next){
   if ('OPTIONS' === req.method) {
     return res.sendStatus(200);

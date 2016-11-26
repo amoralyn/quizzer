@@ -27,7 +27,7 @@ export default class SignUpPage extends React.Component {
         password: password
       }
     }).done((res) => {
-      this.context.router.push('/dashboard');
+      this.context.router.push('/create-quiz');
     }).fail((err) => {
       this.refs.errMsg.textContent = JSON.parse(err.responseText).message;
       this.refs.errMsg.classList.add('alert', 'alert-danger');

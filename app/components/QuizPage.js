@@ -26,7 +26,7 @@ export default class QuizPage extends React.Component {
       },
       headers: {'x-access-token': token}
     }).done((res) => {
-      this.context.router.push('/questions');
+      this.context.router.push('/create-questions');
     }).fail((err) => {
       this.refs.errMsg.textContent = JSON.parse(err.responseText).message;
       this.refs.errMsg.classList.add('alert', 'alert-danger');

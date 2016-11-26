@@ -7,7 +7,6 @@
   module.exports = {
     createQuestion(req, res) {
       let quizId = req.body.quizId;
-      console.log(req.body);
       let question = new Question({
         quizId: quizId,
         question: req.body.question,
