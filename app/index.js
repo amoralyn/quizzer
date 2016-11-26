@@ -1,3 +1,8 @@
-let message = "Just work";
+import React from 'react';
+import ReactDOM from 'react-dom';
+import Routes from './config/routes';
 
-console.log(message);
+
+ReactDOM.render(<Routes/>, document.getElementById('app'));
+
+

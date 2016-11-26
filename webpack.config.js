@@ -18,7 +18,21 @@ module.exports = {
   },
   module: {
     loaders: [
-      {test: /\.js$/, exclude: /node_modules/, loader: "babel-loader"}
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        loader: "babel-loader"},
+      {
+        test: /(\.css)$/,
+        loaders: ['style', 'css']
+      },
+      {
+        test: /\.(jpeg|jpg|png|gif|svg)$/i,
+        loaders: [
+          'file?hash=sha512&digest=hex&name=[hash].[ext]',
+          'image-webpack?bypassOnDebug&optimizationLevel=7&interlaced=false'
+        ]
+      },
     ]
   },
   plugins: [
@@ -26,4 +40,5 @@ module.exports = {
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin()
   ]
+
 };

@@ -17,9 +17,18 @@
   routes(router);
   app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Accept, Content-Type');
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Accept, Content-Type, X-Access-Token');
+    res.header('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE, OPTIONS');
     next();
   });
+
+//cors and preflight filtering
+app.all('*', function(req, res, next){
+  if ('OPTIONS' === req.method) {
+    return res.sendStatus(200);
+  }
+  next();
+});
 
   app.use(morgan('dev'));
   app.use(bodyParser.json());
@@ -30,7 +39,7 @@
   app.use(methodOverride());
 
 
-  // app.use(express.static(__dirname + '/public/'));
+  app.use(express.static(__dirname + '/public/'));
 
   // connect to database
   connect(mongoose, config.database);

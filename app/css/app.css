@@ -1,0 +1,56 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 120px;
+}
+
+.quizzer-logo {
+  animation: App-logo-spin infinite 20s linear;
+  heigth: 50px;
+  float: left;
+}
+
+.App-header {
+  background-color: #c72020;
+  height: 280px;
+  padding: 20px;
+  color: white;
+}
+
+.Dashboard-header {
+  background-color: #c72020;
+  height: 85px;
+  padding: 20px;
+  color: white;
+}
+
+.App-intro {
+  font-size: large;
+  font-family: Lato;
+}
+
+.App-name{
+  margin-top: 50px;
+  font-size: 68px;
+  font-family: Lato;
+}
+
+.Sign-in{
+  margin: auto;
+  width: 100%;
+  /*border: 3px solid green;*/
+  padding: 10px;
+  text-align: center;
+}
+
+.form-input{
+  width: 30%;
+}
+
+@keyframes App-logo-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
