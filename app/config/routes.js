@@ -4,7 +4,7 @@ import LandingPage from './../components/LandingPage';
 import SignUpPage from './../components/SignUpPage';
 import LoginPage from './../components/LoginPage';
 import QuizPage from './../components/QuizPage';
-
+import Dashboard from './../components/Dashboard';
 
 export default class Routes extends React.Component{
   render() {
@@ -15,6 +15,7 @@ export default class Routes extends React.Component{
           <Route path='/signup' component={SignUpPage}/>
           <Route path='/login' component={LoginPage}/>
           <Route path='/create-quiz' component={QuizPage}/>
+          <Route path='/dashboard' component={Dashboard}/> 
         </Router>
       </div>
     )
