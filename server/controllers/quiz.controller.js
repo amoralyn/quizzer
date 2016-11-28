@@ -6,11 +6,11 @@
 
   module.exports ={
     createQuiz(req, res) {
-      let userId = req.decoded.id;
+      let owner = req.decoded.id;
       let quiz = new Quiz({
         name: req.body.name,
         description: req.body.description,
-        userId: userId
+        owner: owner
       });
 
       function addQuizIdToUser(id, quiz) {
@@ -71,7 +71,7 @@
         });
     },
     getQuizByUser(req, res) {
-      Quiz.find({userId: req.params.userId})
+      Quiz.find({owner: req.params.userId})
         .exec()
         .then((quiz) => {
           if (!quiz) {
@@ -86,14 +86,8 @@
         });
     },
     editQuiz(req, res) {
-      let update = {
-        $set: {
-          name: req.body.name,
-          description: req.body.description
-        }
-      };
       Quiz.findByIdAndUpdate({_id: req.params.id},
-      update, {new:true})
+      req.body, {new:true})
         .exec()
         .then((quiz) => {
           if (!quiz) {

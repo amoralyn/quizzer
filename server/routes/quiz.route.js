@@ -19,9 +19,9 @@
       //route to get a quiz by its Id
       router.route('/quiz/:id')
         .get(quizController.getAQuiz)
-        .put(auth.userAccess,
+        .put(auth.quizAccess,
           quizController.editQuiz)
-        .delete(auth.userAccess,
+        .delete(auth.quizAccess,
           quizController.deleteQuiz);
     };
 })();

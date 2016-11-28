@@ -23,12 +23,30 @@ export default class LoginPage extends React.Component {
       }
     }).done((res) => {
       localStorage.setItem('x-access-token', res.token);
+      localStorage.setItem('userId', res.user._id);
       this.context.router.push('/dashboard');
-      console.log(res);
     }).fail((err) => {
       console.log(err);
     });
   }
+
+  showLoginMessage() {
+    let message = localStorage.getItem('signup-successful-msg');
+
+    if (message) {
+      setTimeout(() => {
+        localStorage.removeItem('signup-successful-msg');
+      }, 4000);
+      return message;
+    }
+  }
+
+  addToastClass() {
+    if (localStorage.getItem('signup-successful-msg')) {
+      return "alert alert-success";
+    }
+  }
+
   render() {
     return (
       <div className="App">
@@ -36,6 +54,10 @@ export default class LoginPage extends React.Component {
           <img src={logo} className="App-logo" alt="logo" />
           <h2 className='App-name'>Quizzer!</h2>
         </div>
+
+        <p className={ this.addToastClass() }>
+          { this.showLoginMessage() }
+        </p>
 
         <section className="sign-up-form container">
           <div className="row">
@@ -54,6 +76,10 @@ export default class LoginPage extends React.Component {
               <div className="form-group">
                 <button type="submit" className="btn btn-success">Login</button>
               </div>
+
+              <p>
+                Don't have an account? <Link to="/signup">Sign Up</Link>
+              </p>
             </form>
           </div>
         </section>
