@@ -3,7 +3,8 @@ import {Link} from 'react-router';
 import logo from './../img/quizzer.png';
 import './../css/app.css';
 import $ from 'jquery';
-import './node_modules/dist/css/bootstrap.min.css';
+import Header from './Header';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 export default class Dashboard extends React.Component {
   constructor (props) {
@@ -72,9 +73,7 @@ export default class Dashboard extends React.Component {
   render() {
     return (
       <div  className='App'>
-        <div className='Dashboard-header'>
-          <img src={logo} className='quizzer-logo' alt='logo'/>
-        </div>
+        <Header />
         <section className='dashboard-body container'>
           <div className="jumbotron">
             <h2>Big Headline Here.</h2>

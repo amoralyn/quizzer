@@ -27,6 +27,7 @@ export default class Routes extends React.Component{
       <div>
         <Router history={hashHistory}>
           <Route path='/' component={LandingPage} onEnter={redirectIfLoggedIn} />
+        <Route path='/logout' component={LandingPage} onEnter={redirectIfLoggedIn} />
           <Route path='/signup' component={SignUpPage} onEnter={redirectIfLoggedIn} />
           <Route path='/login' component={LoginPage} onEnter={redirectIfLoggedIn}/>
           <Route path='/create-quiz' component={QuizPage} onEnter={redirectIfLoggedOut} />
