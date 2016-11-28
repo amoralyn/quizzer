@@ -1,7 +1,9 @@
 import React from 'react';
 import logo from './../img/quizzer.png';
+import './node_modules/dist/css/bootstrap.min.css';
 import  './../css/app.css';
 import $ from 'jquery';
+
 
 
 export default class QuizPage extends React.Component {
