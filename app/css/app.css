@@ -9,8 +9,6 @@
 
 .quizzer-logo {
   animation: App-logo-spin infinite 20s linear;
-  heigth: 50px;
-  float: left;
 }
 
 .App-header {
@@ -22,7 +20,8 @@
 
 .Dashboard-header {
   background-color: #c72020;
-  height: 85px;
+  display: flex;
+  justify-content: space-between;
   padding: 20px;
   color: white;
 }

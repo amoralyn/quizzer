@@ -1,6 +1,7 @@
 import React from 'react';
+import Header from './Header';
 import logo from './../img/quizzer.png';
-import './node_modules/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import  './../css/app.css';
 import $ from 'jquery';
 
@@ -36,9 +37,7 @@ export default class QuizPage extends React.Component {
   render() {
     return (
       <div className='App'>
-        <div className='Dashboard-header'>
-          <img src={logo} className='quizzer-logo' alt='logo'/>
-        </div>
+          <Header />
           <section className="quiz-form container">
             <div className="row">
               <form method="post" className="form col-sm-6 col-sm-offset-3" onSubmit={this.handleCreateQuiz}>
