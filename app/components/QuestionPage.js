@@ -20,11 +20,12 @@ export default class QuestionPage extends React.Component {
   }
 
   questionCount() {
-    return (this.state.questionCount += 1) - 1;
+    return this.state.questionCount;
   }
 
   handleCreateQuestion(e) {
     e.preventDefault();
+    let questionForm = this.refs.questionForm;
     let question = this.refs.question.value;
     let option1 = this.refs.option1.value;
     let option2 = this.refs.option2.value;
@@ -33,6 +34,7 @@ export default class QuestionPage extends React.Component {
     let token = localStorage.getItem("x-access-token");
     let quizId = localStorage.getItem("quizId");
     let questionUrl = "http://localhost:3000/api/quiz/" + quizId + "/questions";
+    let questionCount;
 
     $.ajax(questionUrl, {
       method: "POST",
@@ -43,7 +45,11 @@ export default class QuestionPage extends React.Component {
       },
       headers: { "x-access-token": token }
     }).done((res) => {
-      this.forceUpdate();
+      questionCount = this.state.questionCount;
+      this.setState({
+        questionCount: (questionCount + 1)
+      });
+      questionForm.reset();
     }).fail((err) => {
       this.refs.errMsg.textContent = JSON.parse(err.responseText).message;
       this.refs.errMsg.classList.add("alert", "alert-danger");
@@ -57,7 +63,7 @@ export default class QuestionPage extends React.Component {
         </div>
           <section className="quiz-form container">
             <div className="row">
-              <form className="form col-sm-6 col-sm-offset-3" onSubmit={this.handleCreateQuestion}>
+              <form className="form col-sm-6 col-sm-offset-3" ref="questionForm" onSubmit={this.handleCreateQuestion}>
                 <p ref="errMsg">
                 </p>
                 <div className="form-group">
