@@ -1,7 +1,9 @@
 import React from 'react';
 import {Link} from 'react-router';
 import logo from './../img/quizzer.png';
+import './node_modules/dist/css/bootstrap.min.css';
 import  './../css/app.css';
+
 
 export default class LandingPage extends React.Component {
   render() {
