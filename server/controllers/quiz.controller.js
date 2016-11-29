@@ -30,7 +30,7 @@
       }
       quiz.save()
         .then((quiz) => {
-          return addQuizIdToUser(quiz._id, quiz);
+           addQuizIdToUser(quiz._id, quiz);
         })
         .catch((err) => {
           res.status(500).json(err);
@@ -71,7 +71,7 @@
         });
     },
     getQuizByUser(req, res) {
-      Quiz.find({owner: req.params.userId})
+      Quiz.find({owner: req.params.owner})
         .exec()
         .then((quiz) => {
           if (!quiz) {
@@ -82,7 +82,8 @@
           res.status(200).json(quiz);
         })
         .catch((err) => {
-          res.status(500).json(err);
+          res.status(500).json({err,
+            message: 'User does not exist'});
         });
     },
     editQuiz(req, res) {

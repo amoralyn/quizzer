@@ -47,10 +47,9 @@
               return done(err);
             }
 
-            let expectedError = 'tlovelyn@yahoo is not a valid email';
+            const expectedError = 'tlovelyn@yahoo is not a valid email';
 
-            let error = res.body.errors.email.message;
-
+            const error = res.body.errors.email.message;
             expect(res.body).to.be.an('object');
             expect(error).to.eql(expectedError);
             expect(error).to.be.a('string');
@@ -71,11 +70,8 @@
             if (err) {
               return done(err);
             }
-
-            let expectedError = 'Email is required for account registration';
-
-
-            let error = res.body.errors.email.message;
+            const expectedError = 'Email is required for account registration';
+            const error = res.body.errors.email.message;
             expect(error).to.eql(expectedError);
             expect(res.body).to.be.an('object');
             expect(error).to.be.a('string');
@@ -96,9 +92,9 @@
               return done(err);
             }
 
-            let expectedError = 'Password is required for account registration';
+            const expectedError = 'Password is required for account registration';
 
-            let error = res.body.errors.password.message;
+            const error = res.body.errors.password.message;
 
             expect(res.body).to.be.an('object');
             expect(error).to.be.an('string');
@@ -115,9 +111,9 @@
           .post('/api/users')
           .send(userCredentials)
           .end((err, res) => {
-            console.log(res.body);
             expect(res.body).to.be.an('object');
-            // expect(res.body);
+            expect(res.status).to.be(409);
+            expect(res.body).to.have.key('message');
             done();
           });
       });
@@ -129,9 +125,10 @@
       it('Should login the user successfully', (done) => {
         request(app)
           .post('/api/users/login')
-          .send(userCredentials)
+          .send({username: userCredentials.username,
+              password: userCredentials.password})
           .end((err, res) => {
-            let data = res.body;
+            const data = res.body;
             expect(data).to.be.an('object');
             expect(data.user.email).to.equal(userCredentials.email);
             expect(data).to.have.key('token');
@@ -143,7 +140,7 @@
 
     context('When the user logs in with invalid credentials', () => {
       it('Should stop the user from being logged in', (done) => {
-        let invalidCredentials = {
+        const invalidCredentials = {
           username: faker.internet.userName(),
           email: faker.internet.email(),
           password: faker.internet.password()
@@ -152,8 +149,8 @@
           .post('/api/users/login')
           .send(invalidCredentials)
           .end((err, res) => {
-            let error = res.body;
-            let expectedError = 'Authentication failed, User not found';
+            const error = res.body;
+            const expectedError = 'Authentication failed, User not found';
             expect(error.message).to.eql(expectedError);
             expect(error.message).to.be.a('string');
             expect(error).to.be.an('object');
