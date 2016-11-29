@@ -13,15 +13,15 @@
         .get(quizController.getAllQuizzes);
 
       //route to get all quizzes of a specific user
-      router.route('/user/:userId/quizzes')
+      router.route('/user/:owner/quizzes')
         .get(quizController.getQuizByUser);
 
       //route to get a quiz by its Id
       router.route('/quiz/:id')
         .get(quizController.getAQuiz)
-        .put(auth.userAccess,
+        .put(auth.quizAccess,
           quizController.editQuiz)
-        .delete(auth.userAccess,
+        .delete(auth.quizAccess,
           quizController.deleteQuiz);
     };
 })();

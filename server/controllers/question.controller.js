@@ -6,13 +6,12 @@
 
   module.exports = {
     createQuestion(req, res) {
-      let quizId = req.body.quizId;
-      console.log(req.body);
+      let quizId = req.params.quizId;
       let question = new Question({
         quizId: quizId,
         question: req.body.question,
-        answers: req.body.answers,
-        correctIndex: req.body.correctIndex
+        options: req.body.options,
+        answer: req.body.answer
       });
       function addQuestionIdToQuiz(id, question) {
         let update ={
@@ -31,14 +30,14 @@
       }
       question.save()
         .then(() => {
-          return addQuestionIdToQuiz(question.id, question);
+           addQuestionIdToQuiz(question.id, question);
         })
         .catch((err) => {
           res.status(500).json(err);
         });
     },
     getAllQuestions(req, res) {
-      Question.find({}, '-__v')
+      Question.find({quizId: req.params.quizId}, '-__v')
         .sort({'createdAt': 'descending'})
         .limit(parseInt(req.query.limit) || parseInt(10))
         .skip(parseInt(req.query.offset) || parseInt(0))
@@ -64,36 +63,15 @@
               message: 'No question found'
             });
           }
-        })
-        .catch((err) => {
-          res.status(500).json(err);
-        });
-    },
-    getQuestionsByQuiz(req, res) {
-      Question.find({quizId: req.params.quizId})
-        .exec()
-        .then((questions) => {
-          if (!questions) {
-            return res.status(404).json({
-              message: 'No questions found'
-            });
-          }
-          res.status(200).json(questions);
+          res.status(200).json(question);
         })
         .catch((err) => {
           res.status(500).json(err);
         });
     },
     editQuestion(req,res) {
-      let update = {
-        $set: {
-          question: req.body.question,
-          answers: req.body.answers,
-          correctIndex: req.body.correctIndex
-        }
-      };
       Question.findByIdAndUpdate({_id: req.params.id},
-      update, {new:true})
+      req.body, {new:true})
       .exec()
       .then((question) => {
         if (!question) {
@@ -129,4 +107,3 @@
     }
   };
 })();
-

@@ -6,11 +6,11 @@
 
   module.exports ={
     createQuiz(req, res) {
-      let userId = req.decoded.id;
+      let owner = req.decoded.id;
       let quiz = new Quiz({
         name: req.body.name,
         description: req.body.description,
-        userId: userId
+        owner: owner
       });
 
       function addQuizIdToUser(id, quiz) {
@@ -30,7 +30,7 @@
       }
       quiz.save()
         .then((quiz) => {
-          return addQuizIdToUser(quiz._id, quiz);
+           addQuizIdToUser(quiz._id, quiz);
         })
         .catch((err) => {
           res.status(500).json(err);
@@ -71,7 +71,7 @@
         });
     },
     getQuizByUser(req, res) {
-      Quiz.find({userId: req.params.userId})
+      Quiz.find({owner: req.params.owner})
         .exec()
         .then((quiz) => {
           if (!quiz) {
@@ -82,18 +82,13 @@
           res.status(200).json(quiz);
         })
         .catch((err) => {
-          res.status(500).json(err);
+          res.status(500).json({err,
+            message: 'User does not exist'});
         });
     },
     editQuiz(req, res) {
-      let update = {
-        $set: {
-          name: req.body.name,
-          description: req.body.description
-        }
-      };
       Quiz.findByIdAndUpdate({_id: req.params.id},
-      update, {new:true})
+      req.body, {new:true})
         .exec()
         .then((quiz) => {
           if (!quiz) {

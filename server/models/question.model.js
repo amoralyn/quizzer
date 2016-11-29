@@ -14,11 +14,11 @@
         required: true,
         unique: [true, 'You have asked this question']
       },
-      answers: [{
+      options: [{
         type: String,
         required: true
       }],
-      correctIndex:{
+      answer:{
         type: Number,
         required: true
       },

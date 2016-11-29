@@ -9,23 +9,31 @@
   module.exports = {
 
     createNewUser(req, res) {
-      let user = new User({
+      let newUser = new User({
         username: req.body.username,
         email: req.body.email,
         password: req.body.password
       });
-
-      user.save()
-        .then((user) => {
-          user.password = undefined;
-          res.status(200).json({
-            user,
-            message: 'User successfully created'
+      User.findOne({
+        username: req.body.username
+      }, (err, user) => {
+        if (user) {
+          res.status(409).json({
+            message: 'User already exists'
           });
-        })
-        .catch((err) => {
-          res.status(500).json(err);
-        });
+        }
+        newUser.save()
+          .then((user) => {
+            user.password = undefined;
+            res.status(200).json({
+              user,
+              message: 'User successfully created'
+            });
+          })
+          .catch((err) => {
+            res.status(500).json(err);
+          });
+      });
     },
     login(req, res) {
       //check if user exists
@@ -48,6 +56,10 @@
             });
             user.password = undefined;
             return res.status(200).json({ user, token });
+          } else {
+            return res.status(401).json({
+              message: 'Invalid credentials.'
+            });
           }
         })
         .catch((err) => {
@@ -76,6 +88,11 @@
       User.findById({ _id: req.params.id }, '-password -__v')
         .exec()
         .then((user) => {
+          if (!user) {
+            return res.status(404).json({
+              message: 'No user found'
+            });
+          }
           res.send(user);
         })
         .catch((err) => {
