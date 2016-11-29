@@ -1,0 +1,15 @@
+machine:
+  environment:
+    CODE_CLIMATE_REPO_TOKEN: f82845b5cec20b27d116c9ac215126e2993eb4b51b923e234f5e106919c01c24
+    CIRCLE_ENV: test
+    DATABASE_URL: mongodb://localhost/quizzer
+
+  node:
+    version: 7.0.0
+
+dependencies:
+  post:
+    - npm install
+test:
+  override:
+    - npm test
