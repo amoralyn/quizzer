@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router';
-import logo from './../img/quizzer.png';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import logo from './../img/quizzer.png';
 import './../css/app.css';
 
 

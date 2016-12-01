@@ -1,6 +1,6 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import $ from 'jquery';
+import axios from 'axios';
 import Header from './Header.jsx';
 import './../css/app.css';
 
@@ -17,17 +17,19 @@ export default class QuizPage extends React.Component {
     const description = this.refs.description.value;
     const token = localStorage.getItem('x-access-token');
 
-    $.ajax('http://localhost:3000/api/quiz', {
+    axios({
       method: 'POST',
+      url: 'http://localhost:3000/api/quiz',
       data: {
         name,
         description,
       },
       headers: { 'x-access-token': token },
-    }).done((res) => {
-      localStorage.setItem('quizId', res._id);
+    }).then((res) => {
+      console.log(res);
+      localStorage.setItem('quizId', res.data._id);
       this.context.router.push('/create-questions');
-    }).fail((err) => {
+    }).catch((err) => {
       this.refs.errMsg.textContent = JSON.parse(err.responseText).message;
       this.refs.errMsg.classList.add('alert', 'alert-danger');
     });

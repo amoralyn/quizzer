@@ -21,6 +21,13 @@ const redirectIfLoggedOut = (nextState, replace, callback) => {
   callback();
 };
 
+const redirectIfQuizNotCreated = (nextState, replace, callback) => {
+  if (!localStorage.getItem('quizId')) {
+    replace('/create-quiz');
+  }
+  callback();
+};
+
 export default class Routes extends React.Component {
   render() {
     return (

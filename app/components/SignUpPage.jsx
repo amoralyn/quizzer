@@ -1,7 +1,7 @@
 import React from 'react';
 import { Router, Route, Link } from 'react-router';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import $ from 'jquery';
+import axios from 'axios';
 import logo from './../img/quizzer.png';
 import './../css/app.css';
 
@@ -18,17 +18,14 @@ export default class SignUpPage extends React.Component {
     const username = this.refs.username.value;
     const password = this.refs.password.value;
 
-    $.ajax('http://localhost:3000/api/users', {
-      method: 'POST',
-      data: {
-        username,
-        email,
-        password,
-      },
-    }).done((res) => {
-      localStorage.setItem('signup-successful-msg', `${res.message}! You can now login.`);
+    axios.post('http://localhost:3000/api/users', {
+      username,
+      email,
+      password,
+    }).then((res) => {
+      localStorage.setItem('signup-successful-msg', `${res.data.message}! You can now login.`);
       this.context.router.push('/login');
-    }).fail((err) => {
+    }).catch((err) => {
       this.refs.errMsg.textContent = JSON.parse(err.responseText).message;
       this.refs.errMsg.classList.add('alert', 'alert-danger');
     });
