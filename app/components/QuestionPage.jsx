@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import $ from 'jquery';
+import axios from 'axios';
 import Header from './Header.jsx';
 import './../css/app.css';
 
@@ -37,21 +37,22 @@ export default class QuestionPage extends React.Component {
     const questionUrl = `http://localhost:3000/api/quiz/${quizId}/questions`;
     let questionCount;
 
-    $.ajax(questionUrl, {
+    axios({
       method: 'POST',
+      url: questionUrl,
       data: {
         question,
         options: [option1, option2, option3],
         answer,
       },
       headers: { 'x-access-token': token },
-    }).done((res) => {
+    }).then((res) => {
       questionCount = this.state.questionCount;
       this.setState({
         questionCount: (questionCount + 1),
       });
       questionForm.reset();
-    }).fail((err) => {
+    }).catch((err) => {
       this.refs.errMsg.textContent = JSON.parse(err.responseText).message;
       this.refs.errMsg.classList.add('alert', 'alert-danger');
     });

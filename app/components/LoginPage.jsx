@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import axios from 'axios';
 import $ from 'jquery';
 import logo from './../img/quizzer.png';
 import './../css/app.css';
@@ -17,17 +18,15 @@ export default class LoginPage extends React.Component {
     const username = this.refs.username.value;
     const password = this.refs.password.value;
 
-    $.ajax('http://localhost:3000/api/users/login', {
-      method: 'POST',
-      data: {
-        username,
-        password,
-      },
-    }).done((res) => {
-      localStorage.setItem('x-access-token', res.token);
-      localStorage.setItem('username', res.username);
+    axios.post('http://localhost:3000/api/users/login', {
+      username,
+      password,
+    }).then((res) => {
+      console.log(res);
+      localStorage.setItem('x-access-token', res.data.token);
+      localStorage.setItem('username', res.data.username);
       this.context.router.push('/dashboard');
-    }).fail((err) => {
+    }).catch((err) => {
       console.log(err);
     });
   }

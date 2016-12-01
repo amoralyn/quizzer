@@ -1,10 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router';
-import logo from './../img/quizzer.png';
-import './../css/app.css';
-import $ from 'jquery';
-import Header from './Header.jsx';
+import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import './../css/app.css';
+import Header from './Header.jsx';
 
 export default class Dashboard extends React.Component {
   constructor(props) {
@@ -23,12 +22,13 @@ export default class Dashboard extends React.Component {
     const username = localStorage.getItem('username');
     const userQuizzesUrl = `http://localhost:3000/api/user/${username}/quizzes`;
 
-    $.ajax(userQuizzesUrl, {
+    axios({
       method: 'GET',
+      url: userQuizzesUrl,
       headers: {
         'x-access-token': token,
       },
-    }).done((res) => {
+    }).then((res) => {
       this.setState({
         userQuizList: res,
       });
@@ -39,12 +39,13 @@ export default class Dashboard extends React.Component {
     const deleteQuizUrl = `http://localhost:3000/api/quiz/${quizId}`;
     const token = localStorage.getItem('x-access-token');
 
-    $.ajax(deleteQuizUrl, {
+    axios({
       method: 'DELETE',
+      url: deleteQuizUrl,
       headers: {
         'x-access-token': token,
       },
-    }).done((res) => {
+    }).then((res) => {
       this.refs[quizId].style.display = 'none';
     });
   }
@@ -78,8 +79,8 @@ export default class Dashboard extends React.Component {
         <Header />
         <section className="dashboard-body container">
           <div className="jumbotron">
-            <h2>Big Headline Here.</h2>
-            <p>Lorem ipsum dolor si amet bla bla bla</p>
+            <h2>Create your own quiz</h2>
+            <p>Fashion, art, music, science, anything that comes to mind...</p>
 
             <Link to="/create-quiz" className="btn btn-success ">Create quiz</Link>
           </div>
