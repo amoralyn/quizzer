@@ -251,7 +251,7 @@ describe('Quizzes', () => {
         .put(`/api/quiz/${quizId}`)
         .set('x-access-token', jwtToken)
         .send({
-          name: 'New Quiz file',
+          name: faker.lorem.sentence(),
           description: 'Updating a document',
         })
         .end((err, res) => {

@@ -3,6 +3,13 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const ObjectId = Schema.Types.ObjectId;
 
+const notEmpty = (options) => {
+  if (options.length === 0 || options.length < 3) {
+    return false;
+  }
+  return true;
+};
+
 const questionSchema = new Schema({
   quizId: {
     type: ObjectId,
@@ -10,16 +17,17 @@ const questionSchema = new Schema({
   },
   question: {
     type: String,
-    required: true,
+    required: [true, 'Question is required'],
     unique: [true, 'You have asked this question'],
   },
   options: [{
-    type: String,
-    required: true,
+    type: [String],
+    required: [true, 'Options are required'],
+    validate: [notEmpty, 'Please add at least one feature in the options array'],
   }],
   answer: {
     type: Number,
-    required: true,
+    required: [true, 'Answer is required'],
   },
   createdAt: {
     type: Date,

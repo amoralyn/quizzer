@@ -67,10 +67,11 @@ module.exports = {
       });
   },
   editQuestion(req, res) {
-    Question.findByIdAndUpdate({ _id: req.params.id },
+    Question.findByIdAndUpdate({ id: req.params.id },
     req.body, { new: true })
     .exec()
     .then((question) => {
+      console.log('here');
       if (!question) {
         return res.status(404).json({
           message: 'No question found',
@@ -86,10 +87,12 @@ module.exports = {
     });
   },
   deleteQuestion(req, res) {
-    Question.findByIdAndRemove({ _id: req.params.id })
+    console.log('here atm');
+    Question.findByIdAndRemove({ id: req.params.questionId })
       .exec()
       .then((question) => {
         if (!question) {
+          console.log(req.params.id);
           return res.status(404).json({
             message: 'No question found',
           });

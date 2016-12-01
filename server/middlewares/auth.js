@@ -53,10 +53,13 @@ module.exports = {
   },
 
   questionAccess(req, res, next) {
-    Question.findOne({ _id: req.params.id, quizId: req.params.quizId })
+    console.log('here first');
+    Question.findOne({ id: req.params.id, quizId: req.params.quizId })
       .exec()
       .then((question) => {
+        console.log('next');
         if (!question) {
+          console.log('then here');
           return res.json({
             status: 404,
             message: 'No question found',
@@ -67,7 +70,8 @@ module.exports = {
             message: 'Access Denied',
           });
         }
-        return next();
+        console.log('lastly');
+        next();
       })
       .catch((err) => {
         res.status(500).json(err);
