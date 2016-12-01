@@ -1,6 +1,5 @@
-(() => {
-  'use strict';
   const express = require('express');
+
   const app = express();
   const bodyParser = require('body-parser');
   const morgan = require('morgan');
@@ -9,10 +8,11 @@
   const config = require('./server/config/environment.js');
   const connect = require('./server/config/connections.js');
   const mongoose = require('mongoose');
+
   const router = express.Router();
   const routes = require('./server/routes/index.js');
   const bluebird = require('bluebird');
-  mongoose.Promise = bluebird;
+
 
   routes(router);
   app.use((req, res, next) => {
@@ -22,32 +22,30 @@
     next();
   });
 
-  //cors and preflight filtering
-app.all('*', function(req, res, next){
-  if ('OPTIONS' === req.method) {
-    return res.sendStatus(200);
-  }
-  next();
-});
+  // cors and preflight filtering
+  app.all('*', (req, res, next) => {
+    if (req.method === 'OPTIONS') {
+      return res.sendStatus(200);
+    }
+    return next();
+  });
 
   app.use(morgan('dev'));
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({
-    extended: true
+    extended: true,
   }));
-
   app.use(methodOverride());
+  app.use(express.static(`${__dirname}/public/`));
 
-
-  app.use(express.static(__dirname + '/public/'));
-
+  // mongoose.Promise = bluebird;
   // connect to database
   connect(mongoose, config.database);
 
   app.use('/api', router);
 
   app.get('/*', (req, res) => {
-    res.send({message:'You have reached the Quizzer API' });
+    res.send({ message: 'You have reached the Quizzer API' });
   });
 
 
@@ -57,11 +55,8 @@ app.all('*', function(req, res, next){
       throw err;
     }
 
-    console.log('Successfully connected to ' + config.port);
+    console.log(`Successfully connected to ${config.port}`);
   });
 
 
   module.exports = app;
-
-
-})();

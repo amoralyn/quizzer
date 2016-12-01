@@ -1,9 +1,9 @@
 import React from 'react';
-import {Link} from 'react-router';
-import logo from './../img/quizzer.png';
+import { Link } from 'react-router';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import  './../css/app.css';
 import $ from 'jquery';
+import logo from './../img/quizzer.png';
+import './../css/app.css';
 
 
 export default class LoginPage extends React.Component {
@@ -14,18 +14,18 @@ export default class LoginPage extends React.Component {
 
   handleLogin(e) {
     e.preventDefault();
-    let username = this.refs.username.value;
-    let password = this.refs.password.value;
+    const username = this.refs.username.value;
+    const password = this.refs.password.value;
 
     $.ajax('http://localhost:3000/api/users/login', {
       method: 'POST',
       data: {
-        username: username,
-        password: password
-      }
+        username,
+        password,
+      },
     }).done((res) => {
       localStorage.setItem('x-access-token', res.token);
-      localStorage.setItem('userId', res.user._id);
+      localStorage.setItem('username', res.username);
       this.context.router.push('/dashboard');
     }).fail((err) => {
       console.log(err);
@@ -33,7 +33,7 @@ export default class LoginPage extends React.Component {
   }
 
   showLoginMessage() {
-    let message = localStorage.getItem('signup-successful-msg');
+    const message = localStorage.getItem('signup-successful-msg');
 
     if (message) {
       setTimeout(() => {
@@ -45,7 +45,7 @@ export default class LoginPage extends React.Component {
 
   addToastClass() {
     if (localStorage.getItem('signup-successful-msg')) {
-      return "alert alert-success";
+      return 'alert alert-success';
     }
   }
 
@@ -54,25 +54,34 @@ export default class LoginPage extends React.Component {
       <div className="App">
         <div className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
-          <h2 className='App-name'>Quizzer!</h2>
+          <h2 className="App-name">Quizzer!</h2>
         </div>
 
-        <p className={ this.addToastClass() }>
+        <p className={this.addToastClass()}>
           { this.showLoginMessage() }
         </p>
 
         <section className="sign-up-form container">
           <div className="row">
-            <form method="post" className="form col-sm-6 col-sm-offset-3" onSubmit={this.handleLogin}>
+            <form
+              method="post" className="form col-sm-6 col-sm-offset-3"
+              onSubmit={this.handleLogin}
+            >
 
               <div className="form-group">
                 <label htmlFor="username">Username:</label>
-                <input type="text" placeholder="ade123456" id="username" ref="username" className="form-control" required/>
+                <input
+                  type="text" placeholder="ade123456" id="username"
+                  ref="username" className="form-control" required
+                />
               </div>
 
               <div className="form-group">
                 <label htmlFor="user_password">Password:</label>
-                <input type="password" placeholder="*********" ref="password" id="user_password" className="form-control" required/>
+                <input
+                  type="password" placeholder="*********" ref="password"
+                  id="user_password" className="form-control" required
+                />
               </div>
 
               <div className="form-group">
@@ -86,10 +95,10 @@ export default class LoginPage extends React.Component {
           </div>
         </section>
       </div>
-    )
+    );
   }
 }
 
 LoginPage.contextTypes = {
-  router: React.PropTypes.object.isRequired
+  router: React.PropTypes.object.isRequired,
 };

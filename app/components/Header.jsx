@@ -1,7 +1,7 @@
-import React from "react";
-import { Link } from "react-router";
-import logo from "./../img/quizzer.png";
-import "./../css/app.css";
+import React from 'react';
+import { Link } from 'react-router';
+import logo from './../img/quizzer.png';
+import './../css/app.css';
 
 
 export default class Header extends React.Component {
@@ -12,7 +12,7 @@ export default class Header extends React.Component {
 
   logout() {
     localStorage.removeItem('x-access-token');
-    localStorage.removeItem('userId');
+    localStorage.removeItem('username');
   }
 
   render() {
@@ -20,7 +20,7 @@ export default class Header extends React.Component {
       <div className="Dashboard-header">
         <div className="logo">
           <Link to="/dashboard">
-            <img src={logo} className="quizzer-logo" alt="logo"/>
+            <img src={logo} className="quizzer-logo" alt="logo" />
           </Link>
         </div>
 
@@ -28,6 +28,6 @@ export default class Header extends React.Component {
           <Link to="/logout" onClick={this.logout} className="btn btn-warning">Logout</Link>
         </div>
       </div>
-    )
+    );
   }
 }

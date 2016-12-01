@@ -1,0 +1,22 @@
+language: node_js
+node_js:
+  - "7"
+services:
+  - mongodb
+script:
+  - npm test
+after_success:
+  - npm install codeclimate-test-reporter -g
+  - npm run coverage
+env:
+  - CXX=g++-4.8
+  - NODE_ENV=test
+
+addons:
+    apt:
+      sources:
+        - ubuntu-toolchain-r-test
+      packages:
+        - g++-4.8
+    code_climate:
+        repo_token: f82845b5cec20b27d116c9ac215126e2993eb4b51b923e234f5e106919c01c24

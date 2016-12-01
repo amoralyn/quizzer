@@ -1,48 +1,49 @@
-var HtmlWebpackPlugin = require('html-webpack-plugin');
-var webpack = require ('webpack');
-var HTMLWebpackPluginConfig = new HtmlWebpackPlugin({
-  template: __dirname + '/app/index.html',
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const webpack = require('webpack');
+
+const HTMLWebpackPluginConfig = new HtmlWebpackPlugin({
+  template: `${__dirname}/app/index.html`,
   filename: 'index.html',
-  inject: 'body'
+  inject: 'body',
 });
 
 module.exports = {
   debug: true,
   entry: [
     'webpack-hot-middleware/client?reload=true',
-    './app/index.js'
+    './app/index.js',
   ],
   output: {
-    path: __dirname + '/public',
-    filename: "index_bundle.js"
+    path: `${__dirname}/public`,
+    filename: 'index_bundle.js',
   },
   module: {
     loaders: [
       {
-        test: /\.js$/,
+        test: /(.js|.jsx)$/,
         exclude: /node_modules/,
-        loader: "babel-loader"},
+        loader: 'babel-loader' },
       {
         test: /(\.css)$/,
-        loaders: ['style', 'css']
+        loaders: ['style', 'css'],
       },
       {
         test: /\.(jpeg|jpg|png|gif|svg)$/i,
         loaders: [
           'file?hash=sha512&digest=hex&name=[hash].[ext]',
-          'image-webpack?bypassOnDebug&optimizationLevel=7&interlaced=false'
-        ]
+          'image-webpack?bypassOnDebug&optimizationLevel=7&interlaced=false',
+        ],
       },
       {
         test: /\.(eot|svg|ttf|woff|woff2)$/,
-        loader: 'file?name=public/fonts/[name].[ext]'
-      }
-    ]
+        loader: 'file?name=public/fonts/[name].[ext]',
+      },
+    ],
   },
   plugins: [
     HTMLWebpackPluginConfig,
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin()
-  ]
+    new webpack.NoErrorsPlugin(),
+  ],
 
 };
